@@ -2,7 +2,13 @@
 
 前端工具库
 
-## 工具方法
+## 安装
+
+``` javascript
+npm i @sabercc/tools
+```
+
+## API
 
 - test
 
