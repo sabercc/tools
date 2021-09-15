@@ -1,0 +1,37 @@
+{
+  "name": "tools",
+  "version": "1.0.0",
+  "description": "前端工具库",
+  "main": "dist/tools.cjs.js",
+  "module": "dist/tools.esm.js",
+  "browser": "dist/tools.umd.js",
+  "scripts": {
+    "start": "rollup -c -w",
+    "build": "rollup -c && npm run copy",
+    "copy": "cp dist/tools.esm.js demo",
+    "test": "ts-node test/test.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sabercc/tools.git"
+  },
+  "keywords": [
+    "toolkit",
+    "rollup",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sabercc/tools/issues"
+  },
+  "homepage": "https://github.com/sabercc/tools#readme",
+  "devDependencies": {
+    "rollup": "^2.56.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.3"
+  }
+}
