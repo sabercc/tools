@@ -1,6 +1,6 @@
 {
-  "name": "tools",
-  "version": "1.0.0",
+  "name": "@sabercc/tools",
+  "version": "0.0.1",
   "description": "前端工具库",
   "main": "dist/tools.cjs.js",
   "module": "dist/tools.esm.js",
@@ -8,7 +8,7 @@
   "scripts": {
     "start": "rollup -c -w",
     "build": "rollup -c && npm run copy",
-    "copy": "cp dist/tools.esm.js demo",
+    "copy": "cp dist/tools.esm.js demo && cp package.json dist",
     "test": "ts-node test/test.ts"
   },
   "repository": {
