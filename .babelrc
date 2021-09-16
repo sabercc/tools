@@ -13,7 +13,7 @@
       ]
   ],
   "plugins": [
-      ["@babel/plugin-transform-runtime", {"useESModules": false}]
+      ["@babel/plugin-transform-runtime", {"useESModules": true, "corejs": 3}]
   ],
   "ignore": [
     "node_modules/**"

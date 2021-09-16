@@ -1,1 +1,9 @@
-var t={test:function(){console.log("test")}};export{t as default};
+var test = function () {
+    console.log('test');
+};
+
+var tools = {
+    test: test,
+};
+
+export { tools as default };
