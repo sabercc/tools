@@ -1,6 +1,6 @@
 {
   "name": "tools",
-  "version": "0.0.4",
+  "version": "0.0.10",
   "description": "前端工具库",
   "main": "dist/tools.cjs.js",
   "module": "dist/tools.esm.js",
@@ -9,7 +9,7 @@
     "start": "rollup -c -w",
     "build": "cross-env NODE_ENV=production rollup -c && npm run copy",
     "copy": "cp dist/tools.esm.js demo && cp package.json dist",
-    "publish": "node scripts/publish.js",
+    "publishNpm": "node scripts/publish.js",
     "test": "ts-node test/test.ts"
   },
   "repository": {
