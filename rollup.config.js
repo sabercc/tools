@@ -1,50 +1,71 @@
-import babel from 'rollup-plugin-babel';
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-import typescript from 'rollup-plugin-typescript';
-import replace from 'rollup-plugin-replace';
-import {
-  terser
-} from 'rollup-plugin-terser';
-import pkg from './package.json';
+import { defineConfig } from 'rollup'
+import ts from 'rollup-plugin-typescript2'
+import commonjs from '@rollup/plugin-commonjs'
+import babelPlugin from '@rollup/plugin-babel'
+import resolve from '@rollup/plugin-node-resolve'
+import globals from 'rollup-plugin-node-globals'
+import builtins from 'rollup-plugin-node-builtins'
+import terser from '@rollup/plugin-terser'
+import json from '@rollup/plugin-json'
+import dts from 'rollup-plugin-dts'
+import { importExportPlugin } from 'rollup-plugin-import-export'
 
-const env = process.env.NODE_ENV;
+const config = defineConfig([
+    {
+        input: ['src/index.ts'],
+        output: [
+            {
+                dir: 'dist/esm',
+                format: 'esm',
+                preserveModules: true,
+            },
+            {
+                dir: 'dist/cjs',
+                format: 'cjs',
+                preserveModules: true,
+            },
+        ],
+        plugins: [
+            importExportPlugin(),
+            ts(),
+            babelPlugin({ exclude: '**/node_modules/**' }),
+            json(),
+            commonjs(),
+        ],
+    },
+    {
+        input: 'src/index.ts',
+        output: [
+            {
+                file: 'dist/umd/index.js',
+                format: 'umd',
+                name: 'utils',
+            },
+        ],
+        plugins: [
+            importExportPlugin(),
+            ts(),
+            babelPlugin({ exclude: '**/node_modules/**' }),
+            json(),
+            commonjs(),
+            resolve({ mainFields: ['browser'] }),
+            globals(),
+            builtins(),
+            terser(),
+        ],
+    },
+    {
+        input: 'src/index.ts',
+        output: {
+            dir: 'dist/types',
+            format: 'esm',
+            preserveModules: true,
+        },
+        plugins: [
+            importExportPlugin(),
+            dts(),
+        ],
+    },
+])
 
-const plugins = [
-  babel({
-    exclude: ['node_modules'], // 忽略 node_modules
-    runtimeHelpers: true, // 开启体积优化
-  }),
-  resolve(),
-  commonjs(),
-  typescript(),
-  replace({
-    exclude: 'node_modules/**',
-    'process.env.NODE_ENV': JSON.stringify(env || 'development')
-  }),
-  env === 'production' && terser(),
-]
-
-export default [
-  {
-    input: 'src/index.ts',
-    output: [{
-        name: 'tools',
-        file: env === 'production' ? pkg.browser.replace(/\.js$/, '.min.js') : pkg.browser,
-        format: 'umd',
-        exports: 'auto'
-      },
-      {
-        file: env === 'production' ? pkg.main.replace(/\.js$/, '.min.js') : pkg.main,
-        format: 'cjs',
-        exports: 'auto'
-      },
-      {
-        file: env === 'production' ? pkg.module.replace(/\.js$/, '.min.js') : pkg.module,
-        format: 'es',
-        exports: 'auto'
-      }
-    ],
-    plugins
-  },
-];
+export default config
